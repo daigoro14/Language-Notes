@@ -1,0 +1,503 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: rgb(236, 169, 115);
+}
+
+#homeLink {
+    position: absolute;
+}
+
+#homeButton {
+    padding: 8px;
+    font-family: sans-serif;
+    font-size: 15px;
+    color: whitesmoke;
+    background-color: rgb(105, 105, 105);
+    border: none;
+    border-right: 1px solid rgb(62, 63, 63);
+    border-bottom: 1px solid rgb(62, 63, 63);
+    border-radius: 0 0 5px 0;
+}
+
+#homeButton:hover {
+    color: gold;
+    background-color: rgb(90, 90, 90);
+}
+
+/* SIDE MENU*/
+#sideMenu {
+    border-radius: 0px 12px 12px 0px;
+    overflow-y: scroll;
+    margin: 10vh 0 0 0;
+    height: 80vh;
+    width: 200px;
+    background-color: rgb(62, 63, 63);
+    float: left;
+}
+
+#sideMenu::-webkit-scrollbar {
+    display: none;
+}
+
+/* form */
+#createFolderForm {
+    border: none;
+    height: 50px;
+    width: 100%;
+    text-align: left;
+    color: white;
+    padding: 8px;
+    font-size: 18px;
+    background-color: rgb(105, 105, 105);
+}
+
+#createFolderForm label {
+    font-family: sans-serif;
+}
+
+#createFolderForm div {
+    margin-top: 3px;
+}
+
+#createFolderInput {
+    padding: 2px 0 2px 7px;
+    width: 120px;
+    border: none;
+    border-radius: 12px 0 0 12px;
+}
+
+#createFolderInput:focus-visible {
+    outline: none;
+}
+
+#createFolderBtn {
+    width: 47px;
+    position: relative;
+    right: 5px;
+    border: none;
+    border-radius: 0 12px 12px 0;
+    padding: 2px;
+    background-color: rgb(49, 49, 49);
+    color: whitesmoke;
+}
+
+#createFolderBtn:hover {
+    color: rgb(240, 180, 28);
+    cursor: pointer;
+}
+
+#folderList {
+    background-color: rgb(76, 77, 77);
+    list-style: none;
+}
+
+#folderList a {
+    text-decoration: none;
+}
+
+.folderListItem {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: whitesmoke;
+    margin: 0 auto;
+    font-size: 19px;
+    font-family: sans-serif;
+    border-bottom: 1px dotted rgba(41, 41, 41, 0.678);
+    height: 45px;
+    width: 96%;
+}
+
+.folderListItem:hover {
+    width: 100%;
+    color: gold;
+    background-color: rgb(65, 66, 66);
+}
+
+/* CONTENT */
+#contentDesign {
+    position: absolute;
+    /* overflow-y: scroll; */
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 5vh;
+    /* margin: 5vh auto 0 auto; */
+    border-radius: 15px 15px 0 0;
+    width: 55%;
+    height: 95vh;
+    background-color: white;
+}
+
+/* #contentDesign::-webkit-scrollbar {
+    display: none;
+} */
+
+#content {
+    width: 90%;
+    margin: 24px auto 0 auto;
+}
+
+#content::-webkit-scrollbar {
+    display: none;
+}
+
+#folderHeadline {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    font-family: sans-serif;
+}
+
+#modeDiv {
+    display: flex;
+    float: right;
+    margin-bottom: 3px;
+}
+
+#modeButton {
+    height: 21px;
+    padding: 0 1px 0 3px;
+    border: 1px solid black;
+    border-radius: 10px 0 0 10px;
+    color: whitesmoke;
+    background-color: rgb(76, 77, 77);
+}
+
+#modeButton a {
+    color: inherit;
+    text-decoration: none;
+}
+
+#modeButton a:hover {
+    color: gold;
+    background-color: rgb(65, 66, 66);
+}
+
+#modeSelect {
+    height: 21px;
+    border: 1px solid black;
+    border-radius: 0 10px 10px 0;
+}
+
+#modeSelect:focus-visible {
+    outline-width: 0;
+}
+
+
+/* Create Note form */
+#createNoteForm {
+    width: 100%;
+    position: relative;
+    display: flex;
+    align-items: left;
+}
+
+#createNoteForm button {
+    width: 10px;
+    border: 1px solid rgb(77, 76, 76);
+    border-radius: 0 3px 3px 0;
+}
+
+#createNoteForm button:hover {
+    background-color: rgb(183, 187, 189);
+}
+
+#createNoteForm textarea {
+    resize: none;
+    height: 24px;
+    padding: 1px 0 25px 3px;
+    width: 50%;
+    border: 1px solid rgba(206, 203, 203, 0.541); 
+}
+
+#createNoteForm textarea:focus-visible {
+    outline: none;
+}
+
+#createNoteForm textarea:focus::placeholder {
+    color: transparent;
+  }
+
+#createNoteForm textarea::-webkit-scrollbar {
+    display: none;
+}
+
+/* Note List */
+
+#noteDiv {
+    bottom: 0;
+    width: 90%;
+    position: absolute;
+    height: 468px;
+    overflow-y: scroll;
+}
+
+#noteDiv::-webkit-scrollbar {
+    display: none;
+}
+
+#noteContainer {
+    width: 100%;
+    min-height: 50px;
+    position: relative;
+    display: flex;
+    align-items: left;
+}
+
+.noteForm {
+    width: 100%;
+    min-height: 50px;
+    position: relative;
+    display: flex;
+    align-items: left;
+}
+
+.noteTextarea {
+        padding-top: 13px;
+        resize: none;
+        z-index: 0;
+        /* padding: 1px 0 25px 3px; */
+        margin: 0;
+        height: 37px;
+        width: 50%;
+        border: 1px solid rgba(206, 203, 203, 0.541); 
+}
+
+.noteTextarea:focus-visible {
+    outline: none;
+}
+
+.noteTextarea::-webkit-scrollbar {
+    display: none;
+}
+
+.languageNameParagraph {
+    font-size: 10px;
+    z-index: 1;
+    color: #ddb72f;
+    position: absolute;
+    left: 0;
+}
+
+.submitEditButton {
+    width: 9.9px;
+    background-color: rgb(221, 221, 221);
+    border: 1px solid rgb(77, 76, 76);
+    border-radius: 0 3px 3px 0;
+}
+
+.submitEditButton:hover {
+    background-color: rgb(246, 138, 49);
+}
+
+.optionButton {
+    height: 13px;
+    width: 40px;
+    background-color: rgb(76, 77, 77);
+    position: absolute;
+    right: 0;
+    border-radius: 3px 3px 0 3px;
+}
+
+.optionButton:hover {
+    background-color: rgb(65, 66, 66);
+}
+
+.dotsDiv {
+    cursor: pointer;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    display: flex;
+}
+
+.optionDots {
+    /* border: 1px solid rgb(0, 0, 0); */
+    background-color: rgb(254, 254, 254); 
+    width: 2.8px;
+    height: 2.8px;
+    margin: 1px;
+    border-radius: 50%;
+}
+
+.optionButton:hover .optionDots {
+    background-color: gold;
+}
+
+.dropDownContent {
+    z-index: 1;
+    height: 70px;
+    display: none;
+    font-size: 14px;
+    top: 13px;
+    right: 0px;
+    position: absolute;
+    background-color: #eaeaea;
+    min-width: 160px;
+    border-radius: 5px;
+    box-shadow: 0px 2px 8px 0 rgba(0, 0, 0, 0.671);
+}
+
+
+/* SLIDER SWITCH */
+.switchDiv {
+    display: flex;
+    height: 35px;
+    float: right;
+    align-items: center;
+    margin-right: 5px;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 56px;
+    height: 27px;
+    margin: 0 3px 0 3px;
+  }
+  
+  .switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgb(250, 149, 26);
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 19px;
+    width: 19px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  input:checked + .slider {
+    background-color: rgb(24, 199, 65);
+  }
+  
+  input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+  }
+  
+  input:checked + .slider:before {
+    -webkit-transform: translateX(29px);
+    -ms-transform: translateX(29px);
+    transform: translateX(29px);
+  }
+  
+  /* Rounded sliders */
+  .slider.round {
+    border-radius: 34px;
+  }
+  
+  .slider.round:before {
+    border-radius: 50%;
+  }
+
+
+/* DELETE BUTTON */
+.deleteButton {
+    position: absolute;
+    bottom: 0;
+    font-size: 13.5px;
+    color: black;
+    background-color: #f9f9f9;
+    border: none;
+    height: 35px;
+    width: 100%;
+    text-align: left;
+    padding: 0 0 0 8px;
+    border-radius: 5px;
+}
+
+.deleteButton:hover {
+    color: white;
+    background-color: rgb(194, 3, 3);
+}
+
+.dropDownContent li {
+    color: black;
+    padding: 8px 10px;
+    display: block;
+    text-align: left;
+}
+
+.optionDropDown:hover .dropDownContent {
+    display: block;
+}
+/* SLIDESHOW */
+
+.slideshow {
+    margin: 0 auto;
+    overflow: hidden;
+    width: 100%;
+}
+
+.slideshowSlider {
+    white-space: nowrap;
+    transition: ease 1000ms;
+}
+
+.slide {
+    display: inline-block;
+    background-color: rgb(55, 182, 38);
+    /* height: 400px; */
+    width: 100%;
+    border-radius: 40px;
+    text-align: center;
+}
+
+.slideContent {
+    color: black;
+    height: 400px;
+    display: grid;
+    place-content: center;
+    font-size: 25px;
+}
+
+.slideContent h4 {
+    color: white;
+}
+
+.slideContent .secondLanguageNote {
+    color: gold;
+}
+
+.slideshowDots {
+    text-align: center;
+}
+  
+.slideshowDot {
+    display: inline-block;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+    margin: 15px 7px 0px;
+    background-color: #c4c4c4;
+}
+
+.slideshowDot.active {
+    background-color: rgb(240, 180, 28);
+  }
