@@ -54,11 +54,12 @@ export default function Home() {
         
 
         fetchData()
-    }, [params1 ])
+    }, [])
     
 
 
     async function fetchData() {
+        console.log({params1, params})
         if (params1 || params.language) {
             fetch(`${url}/note/language/${params1 || params.language}`, {
                 mode: 'cors',
@@ -68,11 +69,13 @@ export default function Home() {
             })
             .then(res => res.json())
             .then(data => {
+                console.log({data})
                 setFolder(data.folder)
                 setNoteLanguage(data.noteLanguage)
                 setFilterMode(data.noteLanguage)
+                console.log({filterMode})
             })
-            navigate(`/${params1 || params.language}`)
+            // navigate(`/${params1 || params.language}`)
         } else {
             await fetch(`${url}/note/language`, {
                 headers: {
@@ -89,16 +92,20 @@ export default function Home() {
         }
     }
     
-    function createNote() {
-            fetch(`${url}/note/language/${params.language}`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        // body: JSON.stringify({createMessage})
-    })
-    // setCreateMessage('')
-    fetchData()
+    async function createNote() {
+        await fetch(`${url}/note/language/${params.language}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({firstLanguage: firstLngNote, secondLanguage: secondLngNote})
+        })
+        .then(res => res.json())
+
+        setFirstLngNote('')
+        setSecondLngNote('')
+        await fetchData()
+
     }
 
     const selectValue = useRef(null)
@@ -176,7 +183,7 @@ export default function Home() {
         checkBoxForm.current.submit()
     }
 
-    console.log(params.language, params1)
+    // console.log(params.language, params1)
 
   return (
     <div>
