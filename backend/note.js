@@ -36,7 +36,7 @@ router.get('/language/:language', async (req, res) => {
             return 0
         }
     })
-    // console.log(req.params)
+    console.log(noteLanguage)
     const folder = await Language.find()
     res.json({folder, noteLanguage})
 })
@@ -51,8 +51,8 @@ router.post('/language/:language', async (req, res) => {
         const newNote = new Note({firstLanguage, secondLanguage, languageName})
         await newNote.save()
     }
-    // res.send({})
-    res.redirect(`/note/language/${languageName}`)
+    res.send({})
+    // res.redirect(`/note/language/${languageName}`)
     // res.redirect(`/${languageName}`)
 })
 

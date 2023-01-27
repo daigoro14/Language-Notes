@@ -9,21 +9,17 @@ export default function Home() {
     const navigate = useNavigate()
     let params = useParams()
 
-    // const [noteDatabase, setNoteDatabase] = useState([])
     const [folder, setFolder] = useState([])
     const [noteLanguage, setNoteLanguage] = useState([])  
     const [filterMode, setFilterMode] = useState([])  
     const [firstLngNote, setFirstLngNote] = useState('')
     const [secondLngNote, setSecondLngNote] = useState('')
-    const [checkBoxValue, setCheckBoxValue] = useState([])
+    // const [checkBoxValue, setCheckBoxValue] = useState([])
     const [noteId, setNoteId] = useState("")
     const [editFirstLanguage, setEditFirstLanguage] = useState("")
     const [editSecondLanguage, setEditSecondLanguage] = useState("")
     const [params1, setParams1] = useState("")
 
-    // setParams1("")
-
-    // console.log("this is params", params)
     useEffect(() => {
             // if (params1) {
             //     fetch(`${url}/note/language/${params1}`, {
@@ -59,7 +55,7 @@ export default function Home() {
 
 
     async function fetchData() {
-        console.log({params1, params})
+        // console.log({params1, params})
         if (params1 || params.language) {
             fetch(`${url}/note/language/${params1 || params.language}`, {
                 mode: 'cors',
@@ -69,11 +65,13 @@ export default function Home() {
             })
             .then(res => res.json())
             .then(data => {
-                console.log({data})
+                // console.log({data})
                 setFolder(data.folder)
+                // setNoteLanguage((prevState) => [...prevState, data.noteLanguage])
+                // setFilterMode((prevState) => [...prevState, data.noteLanguage])
                 setNoteLanguage(data.noteLanguage)
                 setFilterMode(data.noteLanguage)
-                console.log({filterMode})
+                // console.log({filterMode})
             })
             // navigate(`/${params1 || params.language}`)
         } else {
@@ -100,11 +98,9 @@ export default function Home() {
             },
             body: JSON.stringify({firstLanguage: firstLngNote, secondLanguage: secondLngNote})
         })
-        .then(res => res.json())
-
         setFirstLngNote('')
         setSecondLngNote('')
-        await fetchData()
+        fetchData()
 
     }
 
@@ -144,46 +140,47 @@ export default function Home() {
             console.log(rejected);
         });
     }
+    
 
-    const checkBoxForm = useRef(null)
-    const checkBoxInput = useRef(null)
+    // const checkBoxForm = useRef(null)
+    // const checkBoxInput = useRef(null)
 
-    const handleCheckBoxInput = () => {
-        // console.log(checkBoxInput.current.value)
-        setCheckBoxValue(checkBoxInput.current.value)
-        handleCheckBox()
-        // console.log(checkBoxValue)
-    }    
+    // const handleCheckBoxInput = () => {
+    //     // console.log(checkBoxInput.current.value)
+    //     setCheckBoxValue(checkBoxInput.current.value)
+    //     handleCheckBox()
+    //     // console.log(checkBoxValue)
+    // }    
 
     
 
-    function handleCheckBox(){
-        // e.preventDefault()
-        console.log(checkBoxInput.current.value)
-        if (params.language) {
-            var url1 = `/note/checkBox/${params.language}`
-        } else {
-            var url1 = "/note/checkBox"
-        }
+    // function handleCheckBox(){
+    //     // e.preventDefault()
+    //     console.log(checkBoxInput.current.value)
+    //     if (params.language) {
+    //         var url1 = `/note/checkBox/${params.language}`
+    //     } else {
+    //         var url1 = "/note/checkBox"
+    //     }
         
-        console.log(url)
-        fetch(url1, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({checkBox: checkBoxInput.current.value})
-        })
-        .then(res => res.json())
-        .then(data => console.log(data))
-    }
+    //     console.log(url)
+    //     fetch(url1, {
+    //         method: "POST",
+    //         headers: {
+    //             "Content-Type": "application/json"
+    //         },
+    //         body: JSON.stringify({checkBox: checkBoxInput.current.value})
+    //     })
+    //     .then(res => res.json())
+    //     .then(data => console.log(data))
+    // }
 
 
-    const handleCheckBoxSubmit = () => {
-        checkBoxForm.current.submit()
-    }
+    // const handleCheckBoxSubmit = () => {
+    //     checkBoxForm.current.submit()
+    // }
 
-    // console.log(params.language, params1)
+    console.log("params:", params.language, "params1:", params1)
 
   return (
     <div>
@@ -203,9 +200,11 @@ export default function Home() {
                     {folder && (
                     folder.map((item, index) => {
                         return (
+                            <Link to={`${item.languageName}`}>
                                 <li className="folderListItem" onClick={() => setParams1(item.languageName)}>
-                                    {item.languageName}
+                                        {item.languageName}
                                 </li>
+                            </Link>
                         )
                         })
                     )}
@@ -244,6 +243,9 @@ export default function Home() {
                 </>
                 )}
                 <div id="noteDiv">
+
+                { console.log({ filterMode }) }
+
                 {filterMode && (
                     filterMode.map((item, index) => {
                         return (
@@ -251,7 +253,7 @@ export default function Home() {
                                 {params.language ? true :(
                                     <p className='languageNameParagraph'>{item.languageName}</p>
                                 )}
-                                <form className="noteForm" method="POST" action={`${url}/note/edit/${params.language}`}>
+                                <form key={filterMode} className="noteForm" method="POST" action={`${url}/note/edit/${params.language}`}>
                                     <textarea 
                                         className="noteTextarea" 
                                         type="text"
@@ -259,14 +261,15 @@ export default function Home() {
                                         defaultValue={item.firstLanguage} 
                                         onChange={(e) => {setNoteId(item._id); setEditFirstLanguage(e.target.value); setEditSecondLanguage(item.secondLanguage)}}
                                     />
+                                    {/* <p>{item.firstLanguage}</p> */}
                                     <textarea 
                                         className="noteTextarea" 
                                         type="text"
                                         defaultValue={`${item.secondLanguage}`} 
                                         name="secondLanguage"
                                         onChange={(e) => {setNoteId(item._id); setEditFirstLanguage(item.firstLanguage); setEditSecondLanguage(e.target.value)}}
-
                                     />
+                                    {/* <p>{item.secondLanguage}</p> */}
                                     <button 
                                         className="submitEditButton"
                                         type="submit" 
@@ -301,7 +304,7 @@ export default function Home() {
                                                     </div>
                                                 ) : (
                                                     <>
-                                                        <form ref={checkBoxForm} action={`${url}/note/language`}>
+                                                        {/* <form ref={checkBoxForm} action={`${url}/note/language`}>
                                                             <label className="switch">
                                                                 <input 
                                                                     type="checkbox" 
@@ -312,7 +315,7 @@ export default function Home() {
                                                                 />
                                                                 <span className="slider round"></span>
                                                             </label>
-                                                        </form>
+                                                        </form> */}
                                                     </>
                                                 )}
                                             <span>Learnt</span>
