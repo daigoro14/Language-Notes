@@ -36,14 +36,14 @@ router.get('/language/:language', async (req, res) => {
             return 0
         }
     })
-    console.log(noteLanguage)
+    // console.log(noteLanguage)
     const folder = await Language.find()
     res.json({folder, noteLanguage})
 })
 
 router.post('/language/:language', async (req, res) => {
-    console.log(req.body)
-    console.log(req.params)
+    // console.log(req.body)
+    // console.log(req.params)
     const {firstLanguage, secondLanguage} = req.body
     const languageName = req.params.language
     // const folder = await Language.find({languageName})
@@ -89,14 +89,18 @@ router.post('/mode', async (req,res) => {
 })
 
 router.post('/checkBox', async (req, res) => {
-    const note = await Note.find({_id: req.body.checkBox})
-    if (note[0].learnt === true) {
+    // await Note.updateOne({_id: req.body.checkBox}, {$set: {learnt: false}})
+    console.log("Hi from the backend")
+
+    const note = await Note.findOne({_id: req.body.checkBox})
+    console.log(note.learnt)
+    if (note.learnt === true) {
         await Note.updateOne({_id: req.body.checkBox}, {$set: {learnt: false}})
     } else {
-        await Note.updateOne({_id: req.body.checkBox}, {$set: {learnt: false}})
+        await Note.updateOne({_id: req.body.checkBox}, {$set: {learnt: true}})
     }
-    console.log(note)
-    res.redirect('/')
+    res.json({})
+    // res.redirect('/')
 })
 
 router.post('/checkBox/:language', async (req, res) => {

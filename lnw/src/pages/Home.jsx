@@ -1,79 +1,39 @@
-import React, {useEffect, useState, useRef} from 'react'
+import React, {useEffect, useState} from 'react'
 import { Link, useParams } from 'react-router-dom'
 import '../styles/style.css'
 import {url} from '../App'
-import {useNavigate} from 'react-router-dom'
 
 export default function Home() {
 
-    const navigate = useNavigate()
     let params = useParams()
 
     const [folder, setFolder] = useState([])
-    const [noteLanguage, setNoteLanguage] = useState([])  
-    const [filterMode, setFilterMode] = useState([])  
+    const [notes, setNotes] = useState([]) 
+    const [search, setSearch] = useState("") 
     const [firstLngNote, setFirstLngNote] = useState('')
     const [secondLngNote, setSecondLngNote] = useState('')
-    // const [checkBoxValue, setCheckBoxValue] = useState([])
+    const [checkBox, setCheckBox] = useState(false)
+    const [selectValue, setSelectValue] = useState('all')
     const [noteId, setNoteId] = useState("")
     const [editFirstLanguage, setEditFirstLanguage] = useState("")
     const [editSecondLanguage, setEditSecondLanguage] = useState("")
-    const [params1, setParams1] = useState("")
 
     useEffect(() => {
-            // if (params1) {
-            //     fetch(`${url}/note/language/${params1}`, {
-            //         mode: 'cors',
-            //         // headers: {
-            //         //     'Content-Type': 'application/json',
-            //         // },
-            //     })
-            //     .then(res => res.json())
-            //     .then(data => {
-            //         setFolder(data.folder)
-            //         setNoteLanguage(data.noteLanguage)
-            //         setFilterMode(data.noteLanguage)
-            //     })
-            // } else {
-            //     fetch(`${url}/note/language`, {
-            //         headers: {
-            //             'Content-Type': 'application/json',
-            //         }
-            //     })
-            //     .then(res => res.json())
-            //     .then(data => {
-            //         setFolder(data.folder)
-            //         setNoteLanguage(data.noteLanguage)
-            //         setFilterMode(data.noteLanguage)
-            //     })
-            // }
-        
-
         fetchData()
-    }, [])
+    }, [params])
     
 
 
     async function fetchData() {
-        // console.log({params1, params})
-        if (params1 || params.language) {
-            fetch(`${url}/note/language/${params1 || params.language}`, {
+        if (params.language) {
+            fetch(`${url}/note/language/${params.language}`, {
                 mode: 'cors',
-                // headers: {
-                //     'Content-Type': 'application/json',
-                // },
             })
             .then(res => res.json())
             .then(data => {
-                // console.log({data})
                 setFolder(data.folder)
-                // setNoteLanguage((prevState) => [...prevState, data.noteLanguage])
-                // setFilterMode((prevState) => [...prevState, data.noteLanguage])
-                setNoteLanguage(data.noteLanguage)
-                setFilterMode(data.noteLanguage)
-                // console.log({filterMode})
+                setNotes(data.noteLanguage)
             })
-            // navigate(`/${params1 || params.language}`)
         } else {
             await fetch(`${url}/note/language`, {
                 headers: {
@@ -83,10 +43,8 @@ export default function Home() {
             .then(res => res.json())
             .then(data => {
                 setFolder(data.folder)
-                setNoteLanguage(data.noteLanguage)
-                setFilterMode(data.noteLanguage)
+                setNotes(data.noteLanguage)
             })
-            navigate('/')
         }
     }
     
@@ -104,18 +62,6 @@ export default function Home() {
 
     }
 
-    const selectValue = useRef(null)
-
-    const handleSelectValue = () => {
-        if (selectValue.current.value === 'learnt') {
-            console.log(noteLanguage.filter(item => item.learnt))
-            setFilterMode(noteLanguage.filter(item => item.learnt))
-        } else if (selectValue.current.value === 'new') {
-            setFilterMode(noteLanguage.filter(item => item.learnt === false))
-        } else if (selectValue.currentvalue === 'all') {
-            setFilterMode(noteLanguage)
-        }
-    }
 
     useEffect(() => {
             if (noteId) {
@@ -123,6 +69,7 @@ export default function Home() {
             }
     }, [editFirstLanguage, editSecondLanguage, noteId])
 
+    console.log(checkBox)
 
     function sendEditNote() {
         fetch(`${url}/note/edit`, {
@@ -154,8 +101,9 @@ export default function Home() {
 
     
 
-    // function handleCheckBox(){
-    //     // e.preventDefault()
+    async function handleCheckBox(id){
+        console.log(id)
+        // e.preventDefault()
     //     console.log(checkBoxInput.current.value)
     //     if (params.language) {
     //         var url1 = `/note/checkBox/${params.language}`
@@ -164,28 +112,28 @@ export default function Home() {
     //     }
         
     //     console.log(url)
-    //     fetch(url1, {
-    //         method: "POST",
-    //         headers: {
-    //             "Content-Type": "application/json"
-    //         },
-    //         body: JSON.stringify({checkBox: checkBoxInput.current.value})
-    //     })
-    //     .then(res => res.json())
-    //     .then(data => console.log(data))
-    // }
+        await fetch(`${url}/note/checkBox`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({checkBox: id})
+        })
+        fetchData()
+    }
+
 
 
     // const handleCheckBoxSubmit = () => {
     //     checkBoxForm.current.submit()
     // }
 
-    console.log("params:", params.language, "params1:", params1)
+    console.log(search)
 
   return (
     <div>
         <Link id="homeLink" to="/">
-            <button id="homeButton" onClick={() => setParams1("")}>Home</button>
+            <button id="homeButton">Home</button>
         </Link>
 
         <div id="sideMenu">
@@ -200,8 +148,8 @@ export default function Home() {
                     {folder && (
                     folder.map((item, index) => {
                         return (
-                            <Link to={`${item.languageName}`}>
-                                <li className="folderListItem" onClick={() => setParams1(item.languageName)}>
+                            <Link to={`/${item.languageName}`}>
+                                <li className="folderListItem" onClick={fetchData}>
                                         {item.languageName}
                                 </li>
                             </Link>
@@ -217,8 +165,8 @@ export default function Home() {
                         <h1 id="folderHeadline">{params.language}</h1>
                         <div id="modeDiv">
                             <button id="modeButton"><Link to={`${url}/slideshow/${params.language}`}>Slide Show</Link></button>
-                            <select ref={selectValue} name="filterOption" onChange={handleSelectValue} id="modeSelect">
-                                <option defaultValue="all">All</option>
+                            <select onChange={(e) => {setSelectValue(e.target.value)}} name="filterOption" id="modeSelect">
+                                <option value="all">All</option>
                                 <option value="new">New</option>
                                 <option value="learnt">Learnt</option>
                             </select>
@@ -234,42 +182,57 @@ export default function Home() {
                     <h1 id="folderHeadline">All Notes</h1>
                     <div id="modeDiv">
                         <button id="modeButton"><Link to="/slideshow">Slide Show</Link></button>
-                        <select ref={selectValue} name="filterOption" onChange={handleSelectValue} id="modeSelect">
-                            <option name="filterOption" defaultValue="all">All</option>
-                            <option name="filterOption" value="new">New</option>
-                            <option name="filterOption" value="learnt">Learnt</option>
+                        <select onChange={(e) => {setSelectValue(e.target.value)}} name="filterOption" id="modeSelect">
+                            <option value="all">All</option>
+                            <option value="new">New</option>
+                            <option value="learnt">Learnt</option>
                         </select>
                     </div>
                 </>
                 )}
+
+                <input id="searchBar" onChange={(e) => (setSearch(e.target.value))} placeholder="Search through your notes"/>
+
                 <div id="noteDiv">
-
-                { console.log({ filterMode }) }
-
-                {filterMode && (
-                    filterMode.map((item, index) => {
+                {notes
+                .filter((item) => {
+                    if (selectValue === 'learnt' && search) {
+                        return item.learnt === true && (item.firstLanguage.toLowerCase().includes(search.toLowerCase()) || item.secondLanguage.toLowerCase().includes(search.toLowerCase()))
+                    } else if (selectValue === 'learnt') {
+                        return item.learnt === true
+                    } else if (selectValue === 'new' && search) {
+                        return item.learnt === false && (item.firstLanguage.toLowerCase().includes(search.toLowerCase()) || item.secondLanguage.toLowerCase().includes(search.toLowerCase()))
+                    } else if (selectValue === 'new') {
+                        return item.learnt === false
+                    } else if (search) {
+                        return item.firstLanguage.toLowerCase().includes(search.toLowerCase()) || item.secondLanguage.toLowerCase().includes(search.toLowerCase())
+                    } else if (selectValue === 'all') {
+                        return item 
+                    }
+                })
+                .map((item, index) => {
                         return (
                             <div id="noteContainer">
                                 {params.language ? true :(
                                     <p className='languageNameParagraph'>{item.languageName}</p>
                                 )}
-                                <form key={filterMode} className="noteForm" method="POST" action={`${url}/note/edit/${params.language}`}>
+                                <form className="noteForm" method="POST" action={`${url}/note/edit/${params.language}`}>
                                     <textarea 
+                                        key={item.firstLanguage}
                                         className="noteTextarea" 
                                         type="text"
                                         name="firstLanguage"
                                         defaultValue={item.firstLanguage} 
                                         onChange={(e) => {setNoteId(item._id); setEditFirstLanguage(e.target.value); setEditSecondLanguage(item.secondLanguage)}}
                                     />
-                                    {/* <p>{item.firstLanguage}</p> */}
                                     <textarea 
+                                        key={item.secondLanguage}
                                         className="noteTextarea" 
                                         type="text"
                                         defaultValue={`${item.secondLanguage}`} 
                                         name="secondLanguage"
                                         onChange={(e) => {setNoteId(item._id); setEditFirstLanguage(item.firstLanguage); setEditSecondLanguage(e.target.value)}}
                                     />
-                                    {/* <p>{item.secondLanguage}</p> */}
                                     <button 
                                         className="submitEditButton"
                                         type="submit" 
@@ -290,32 +253,33 @@ export default function Home() {
                                         <div className="switchDiv">
                                             <span>New</span>
                                                 {params.language ? (
-                                                    <div className="switch">
+                                                    <label className="switch">
                                                         <input 
+                                                            key={item._id}
                                                             // ref={checkBoxInput}
                                                             type="checkbox" 
-                                                            name="learnt"
-                                                            // defaultChecked={item.learnt}
-                                                            value={item._id}
-                                                            // onChange={handleCheckBoxInput}
+                                                            name="checkbox"
+                                                            defaultChecked={item.learnt}
+                                                            // value={item._id}
+                                                            onClick={() => {handleCheckBox(item._id)}}
                                                         />
-                                                        <p>{item._id}</p>
+                                                        {/* <p>{item._id}</p> */}
                                                         <span className="slider round"></span>
-                                                    </div>
+                                                    </label>
                                                 ) : (
                                                     <>
-                                                        {/* <form ref={checkBoxForm} action={`${url}/note/language`}>
+                                                        {/* <form ref={checkBoxForm} action={`${url}/note/language`}> */}
                                                             <label className="switch">
                                                                 <input 
                                                                     type="checkbox" 
                                                                     name="checkbox"
                                                                     defaultChecked={item.learnt}
-                                                                    onClick={handleCheckBoxSubmit}
+                                                                    // onClick={handleCheckBoxSubmit}
                                                                     value={item.learnt}
                                                                 />
                                                                 <span className="slider round"></span>
                                                             </label>
-                                                        </form> */}
+                                                        {/* </form> */}
                                                     </>
                                                 )}
                                             <span>Learnt</span>
@@ -326,7 +290,7 @@ export default function Home() {
                             </div>
                         )
                         })
-                )}
+                }
                 </div>
             </div>
         </div>

@@ -139,7 +139,10 @@ body {
 
 #content {
     width: 90%;
-    margin: 24px auto 0 auto;
+    height: 92vh;
+    margin: 3vh auto 0 auto;
+    display: flex;
+    flex-direction: column;
 }
 
 #content::-webkit-scrollbar {
@@ -149,14 +152,14 @@ body {
 #folderHeadline {
     display: flex;
     justify-content: center;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     font-family: sans-serif;
 }
 
 #modeDiv {
-    display: flex;
-    float: right;
     margin-bottom: 3px;
+    display: flex;
+    justify-content: flex-end;
 }
 
 #modeButton {
@@ -227,12 +230,32 @@ body {
     display: none;
 }
 
+
+/* Search Bar */
+
+#searchBar {
+    -webkit-box-sizing: border-box; 
+    -moz-box-sizing: border-box;    
+    box-sizing: border-box;      
+    height: 35px;
+    width: 100%;
+    margin: 10px 0px 12px 0px;
+    border-radius: 23px;
+    border: 1px solid rgb(110, 110, 110);
+    position: relative;
+    padding: 0 10px 0 10px
+}
+
+#searchBar:focus-visible {
+    outline: 1px solid rgb(110, 110, 110);
+}
+
 /* Note List */
 
 #noteDiv {
     bottom: 0;
-    width: 90%;
-    position: absolute;
+    width: 100%;
+    /* position: absolute; */
     height: 468px;
     overflow-y: scroll;
 }
