@@ -1,6 +1,8 @@
 import React, {useEffect, useState, useRef} from 'react'
 import { Link, useParams } from 'react-router-dom'
 import '../styles/style.css'
+import {url} from '../App'
+
 
 export default function SlideShow() {
 
@@ -18,7 +20,7 @@ export default function SlideShow() {
 
     useEffect(() => {
         if (params.language) {
-            fetch(`/note/slideshow/${params.language}`, {
+            fetch(`${url}/note/slideshow/${params.language}`, {
                 mode: 'cors',
                 // headers: {
                 //     'Content-Type': 'application/json',

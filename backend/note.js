@@ -52,19 +52,13 @@ router.post('/language/:language', async (req, res) => {
         await newNote.save()
     }
     res.send({})
-    // res.redirect(`/note/language/${languageName}`)
-    // res.redirect(`/${languageName}`)
 })
 
 router.post('/language', async (req, res) => {
     console.log('hello', req.body)
-    if(req.body.languageName) {
-        const folder = new Language({languageName: req.body.languageName})
-        await folder.save()
-        res.redirect(`/${req.body.languageName}`)
-    } else {
-        res.redirect('/')
-    }
+    const folder = new Language({languageName: req.body.languageName})
+    await folder.save()
+    res.json({})
 })
 
 router.post('/edit', async (req, res) => {
@@ -89,32 +83,32 @@ router.post('/mode', async (req,res) => {
 })
 
 router.post('/checkBox', async (req, res) => {
-    // await Note.updateOne({_id: req.body.checkBox}, {$set: {learnt: false}})
-    console.log("Hi from the backend")
-
     const note = await Note.findOne({_id: req.body.checkBox})
-    console.log(note.learnt)
     if (note.learnt === true) {
         await Note.updateOne({_id: req.body.checkBox}, {$set: {learnt: false}})
     } else {
         await Note.updateOne({_id: req.body.checkBox}, {$set: {learnt: true}})
     }
     res.json({})
-    // res.redirect('/')
 })
 
-router.post('/checkBox/:language', async (req, res) => {
-    const languageName = req.params.language
-    const note = await Note.find({_id: req.body.checkBox})
-    if (note[0].learnt === true) {
-        await Note.updateOne({_id: req.body.checkBox}, {$set: {learnt: false}})
-    } else {
-        await Note.updateOne({_id: req.body.checkBox}, {$set: {learnt: false}})
-    }
-    console.log(note[0].learnt)
-    // console.log(note)
-    
-    // res.redirect(`/${languageName}`)
+router.delete('/deleteNote', async (req, res) => {
+    await Note.deleteOne({_id: req.body.deleteId})
+    res.json({})
+})
+
+router.delete('/deleteFolder', async (req, res) => {
+    console.log(req.body.language)
+    await Language.deleteOne({languageName: req.body.language})
+    await Note.deleteMany({languageName: req.body.language})
+    res.json({})
+})
+
+router.post('/editFolder', async (req, res) => {
+    console.log(req.body)
+    await Language.updateOne({languageName: req.body.oldLng}, {$set: {languageName: req.body.newLng}})
+    await Note.updateMany({languageName: req.body.oldLng}, {$set: {languageName: req.body.newLng}})
+    res.json({})
 })
 
 // SLIDESHOW
@@ -152,6 +146,7 @@ router.get('/slideshow/:language', async (req, res) => {
     })
     // console.log(req.params)
     const folder = await Language.find()
+    console.log("yup you reached slideshow")
     res.json({folder, noteLanguage})
 })
 

@@ -43,20 +43,27 @@ body {
     display: none;
 }
 
-/* form */
+/* FORM */
 #createFolderForm {
+    z-index: 1;
+    -webkit-box-sizing: border-box; 
+    -moz-box-sizing: border-box;    
+    box-sizing: border-box; 
+    position: fixed;
     border: none;
-    height: 50px;
-    width: 100%;
+    height: 66px;
+    width: 200px;
     text-align: left;
     color: white;
     padding: 8px;
     font-size: 18px;
     background-color: rgb(105, 105, 105);
+    border-radius: 0 12px 0 0;
 }
 
 #createFolderForm label {
     font-family: sans-serif;
+    display: block;
 }
 
 #createFolderForm div {
@@ -68,6 +75,10 @@ body {
     width: 120px;
     border: none;
     border-radius: 12px 0 0 12px;
+}
+
+#createFolderInput:focus::placeholder {
+    color: transparent;
 }
 
 #createFolderInput:focus-visible {
@@ -91,6 +102,9 @@ body {
 }
 
 #folderList {
+    z-index: 0;
+    position: relative;
+    top: 66px;
     background-color: rgb(76, 77, 77);
     list-style: none;
 }
@@ -122,11 +136,9 @@ body {
 /* CONTENT */
 #contentDesign {
     position: absolute;
-    /* overflow-y: scroll; */
     left: 50%;
     transform: translateX(-50%);
     margin-top: 5vh;
-    /* margin: 5vh auto 0 auto; */
     border-radius: 15px 15px 0 0;
     width: 55%;
     height: 95vh;
@@ -250,12 +262,17 @@ body {
     outline: 1px solid rgb(110, 110, 110);
 }
 
+#searchBar:focus::placeholder {
+    color: transparent;
+}
+
 /* Note List */
 
 #noteDiv {
+    border-top: 1px solid rgba(206, 203, 203, 0.541);;
+    border-bottom: 1px solid rgba(206, 203, 203, 0.541);
     bottom: 0;
     width: 100%;
-    /* position: absolute; */
     height: 468px;
     overflow-y: scroll;
 }
@@ -284,7 +301,6 @@ body {
         padding-top: 13px;
         resize: none;
         z-index: 0;
-        /* padding: 1px 0 25px 3px; */
         margin: 0;
         height: 37px;
         width: 50%;
@@ -328,6 +344,8 @@ body {
 }
 
 .optionButton:hover {
+    width: 41px;
+    height: 14px;
     background-color: rgb(65, 66, 66);
 }
 
@@ -358,7 +376,7 @@ body {
     height: 70px;
     display: none;
     font-size: 14px;
-    top: 13px;
+    top: 14px;
     right: 0px;
     position: absolute;
     background-color: #eaeaea;
@@ -367,14 +385,35 @@ body {
     box-shadow: 0px 2px 8px 0 rgba(0, 0, 0, 0.671);
 }
 
+/* SETTINGS */
+
+#settingsDiv{
+    display: flex;
+    justify-content: flex-end;
+}
+
+#settingsDiv button {
+    color: rgb(109, 109, 109);
+    background-color: inherit;
+    border: none;
+    margin: 10px 5px 10px 6px;
+}
+
+#settingsDiv button:hover {
+    color: rgb(68, 68, 68);
+    cursor: pointer;
+    text-decoration: underline;
+
+}
 
 /* SLIDER SWITCH */
 .switchDiv {
+    transform: translateX(-50%);
+    left: 52%;
+    position: absolute;
     display: flex;
     height: 35px;
-    float: right;
     align-items: center;
-    margin-right: 5px;
 }
 
 .switch {
@@ -402,6 +441,10 @@ body {
     -webkit-transition: .4s;
     transition: .4s;
   }
+
+  .slider:hover {
+    background-color: rgb(250, 104, 26);
+  }
   
   .slider:before {
     position: absolute;
@@ -416,7 +459,11 @@ body {
   }
   
   input:checked + .slider {
-    background-color: rgb(24, 199, 65);
+    background-color: rgb(60, 216, 32);
+  }
+
+  input:checked + .slider:hover {
+    background-color: rgb(55, 189, 31);
   }
   
   input:focus + .slider {
@@ -469,6 +516,185 @@ body {
 .optionDropDown:hover .dropDownContent {
     display: block;
 }
+
+/* DELETE NOTE BANNER */
+
+.dltNoteBanner {
+    /* -webkit-box-sizing: border-box; 
+    -moz-box-sizing: border-box;    
+    box-sizing: border-box;   */
+    left: 50%;
+    transform: translate(-50%,-50%);
+    top: 50%;
+    border: 1px solid black;
+    border-radius: 10px;
+    width: 450px;
+    height: 110px;
+    background-color: rgb(104, 104, 104);
+    z-index: 2;
+    position: absolute;
+    text-align: center;
+}
+
+.hideDltNoteBanner {
+    display: none
+}
+
+.dltNoteBanner p {
+    /* position: absolute; */
+    margin-top: 10px;
+    text-shadow: rgb(0, 0, 0) 1px 0 3px;
+    color: white;
+}
+
+.bannerDltBtn {
+    left: 100px;
+    position: absolute;
+    top: 50px;
+    border-radius: 8px;
+    border: none;
+    height: 30px;
+    width: 120px;
+    background-color: rgb(240, 29, 29);
+    color: white;
+    /* display: block; */
+}
+
+.bannerDltBtn:hover {
+    height: 40px;
+}
+
+.bannerNvmBtn {
+    top: 50px;
+    right: 100px;
+    position: absolute;
+    background-color: whitesmoke;
+    border-radius: 8px;
+    border: none;
+    height: 30px;
+    width: 120px;
+    /* display: block; */
+}
+
+.bannerNvmBtn:hover {
+    height: 40px;
+    /* color: white; */
+    /* background-color: rgb(168, 168, 168); */
+}
+
+/* DELETE FOLDER BANNER */
+
+.dltFolderBanner {
+    left: 50%;
+    transform: translate(-50%,-50%);
+    top: 50%;
+    border: 1px solid black;
+    border-radius: 10px;
+    width: 450px;
+    height: 110px;
+    background-color: rgb(104, 104, 104);
+    z-index: 2;
+    position: absolute;
+    text-align: center;
+}
+
+.hideDltFolderBanner {
+    display: none
+}
+
+.dltFolderBanner p {
+    /* position: absolute; */
+    margin-top: 10px;
+    text-shadow: rgb(0, 0, 0) 1px 0 3px;
+    color: white;
+}
+
+/* DELETE EDIT BANNER */
+
+.editBanner {
+    left: 50%;
+    transform: translate(-50%,-50%);
+    top: 50%;
+    border: 1px solid black;
+    border-radius: 10px;
+    width: 450px;
+    height: 110px;
+    background-color: rgb(104, 104, 104);
+    z-index: 2;
+    position: absolute;
+    text-align: center;
+}
+
+.hideEditBanner {
+    display: none
+}
+
+.editBanner p {
+    margin-top: 10px;
+    text-shadow: rgb(0, 0, 0) 1px 0 3px;
+    color: white;
+}
+
+#editFolderForm {
+    margin-top: 10px;
+    display: flex;
+    height: 25px;
+    justify-content: center;
+}
+
+#editFolderInput {
+    top: 40px;
+    border: none;
+    border-radius: 12px 0 0 12px;
+    padding-left: 8px;
+    height: 25px;
+    font-size: 16px;
+}
+
+#editFolderInput:focus-visible{
+    outline: none;
+}
+
+#editUpdateBtn {
+    background-color: rgb(49, 49, 49);
+    color: white;
+    width: 65px;
+    height: 25px;
+    border: none;
+    border-radius: 0 12px 12px 0;
+}
+
+#editUpdateBtn:hover {
+    color: rgb(240, 180, 28);
+    cursor: pointer;
+}
+
+.close {
+    position: absolute;
+    right: 8px;
+    top: 6px;
+    width: 26px;
+    height: 26px;
+    opacity: 0.3;
+  }
+  .close:hover {
+    opacity: 1;
+  }
+  .close:before, .close:after {
+    position: absolute;
+    left: 15px;
+    content: ' ';
+    height: 18px;
+    width: 2px;
+    background-color: #333;
+  }
+  .close:before {
+    transform: rotate(45deg);
+  }
+  .close:after {
+    transform: rotate(-45deg);
+  }
+
 /* SLIDESHOW */
 
 .slideshow {
