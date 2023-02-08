@@ -30,7 +30,6 @@ export default function Home() {
         fetchData()
     }, [params])
     
-
     async function fetchData() {
         if (params.language) {
             fetch(`${url}/note/language/${params.language}`, {
@@ -170,6 +169,8 @@ export default function Home() {
         <Link id="homeLink" to="/">
             <button id="homeButton">Home</button>
         </Link>
+
+        {/* FOLDERS */}
 
         <div id="sideMenu">
             <div id="createFolderForm">

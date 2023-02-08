@@ -12,10 +12,13 @@ export default function SlideShow() {
     const delay = 2500;
 
     const [folder, setFolder] = useState([])
-    const [noteLanguage, setNoteLanguage] = useState([])  
-    const [filterMode, setFilterMode] = useState([])    
-    const [index, setIndex] = React.useState(0);
-    const timeoutRef = React.useRef(null);
+    // const [noteLanguage, setNoteLanguage] = useState([])  
+    const [notes, setNotes] = useState([])    
+    const [selectValue, setSelectValue] = useState('all')
+    const [play, setPlay] = useState(true)
+
+    const [index, setIndex] = useState(0);
+    const timeoutRef = useRef(null);
 
 
     useEffect(() => {
@@ -29,16 +32,30 @@ export default function SlideShow() {
             .then(res => res.json())
             .then(data => {
                 setFolder(data.folder)
-                setNoteLanguage(data.noteLanguage)
-                setFilterMode(data.noteLanguage)
+                if (selectValue === 'learnt') {
+                    setNotes(
+                        data.noteLanguage.filter((item) => {
+                            return item.learnt === true
+                        })
+                    )
+                } else if (selectValue === 'new') {
+                    setNotes(
+                        data.noteLanguage.filter((item) => {
+                            return item.learnt === false
+                        })
+                    )
+                } else if (selectValue === 'all') {
+                    setNotes(data.noteLanguage)
+                }  
             })
         } else {
             fetchData()
         }
-    }, [params.language])
+        setIndex(0)
+    }, [params && selectValue])
 
     function fetchData() {
-        fetch('/note/slideshow', {
+        fetch(`${url}/note/slideshow`, {
             headers: {
                 'Content-Type': 'application/json',
             }
@@ -46,23 +63,25 @@ export default function SlideShow() {
         .then(res => res.json())
         .then(data => {
             setFolder(data.folder)
-            setNoteLanguage(data.noteLanguage)
-            setFilterMode(data.noteLanguage)
+            if (selectValue === 'learnt') {
+                setNotes(
+                    data.noteLanguage.filter((item) => {
+                        return item.learnt === true
+                    })
+                )
+            } else if (selectValue === 'new') {
+                setNotes(
+                    data.noteLanguage.filter((item) => {
+                        return item.learnt === false
+                    })
+                )
+            } else if (selectValue === 'all') {
+                setNotes(data.noteLanguage)
+            }  
+            setIndex(0)
         })
     }
     
-    const selectValue = useRef(null)
-
-    const handleSelectValue = () => {
-        if (selectValue.current.value === 'learnt') {
-            console.log(noteLanguage.filter(item => item.learnt))
-            setFilterMode(noteLanguage.filter(item => item.learnt))
-        } else if (selectValue.current.value === 'new') {
-            setFilterMode(noteLanguage.filter(item => item.learnt === false))
-        } else if (selectValue.currentvalue === 'all') {
-            setFilterMode(noteLanguage)
-        }
-    }
 
     function resetTimeout() {
         if (timeoutRef.current) {
@@ -70,12 +89,12 @@ export default function SlideShow() {
         }
     }
 
-    React.useEffect(() => {
+    useEffect(() => {
         resetTimeout();
         timeoutRef.current = setTimeout(
           () =>
             setIndex((prevIndex) =>
-              prevIndex === noteLanguage.length - 1 ? 0 : prevIndex + 1
+              prevIndex === notes.length - 1 ? 0 : prevIndex + 1
             ),
           delay
         );
@@ -84,6 +103,9 @@ export default function SlideShow() {
             resetTimeout();
         };
       }, [index]);
+
+
+    //   console.log(index, notes)
 
   return (
     <div>
@@ -124,7 +146,7 @@ export default function SlideShow() {
                         <h1 id="folderHeadline">Slide Show {params.language}</h1>
                         <div id="modeDiv">
                             <button id="modeButton"><Link to={`/${params.language}`}>Notes</Link></button>
-                            <select ref={selectValue} name="filterOption" onChange={handleSelectValue} id="modeSelect">
+                            <select onChange={(e) => {setSelectValue(e.target.value)}} name="filterOption" id="modeSelect">
                                 <option value="all">All</option>
                                 <option value="new">New</option>
                                 <option value="learnt">Learnt</option>
@@ -136,7 +158,7 @@ export default function SlideShow() {
                         <h1 id="folderHeadline">Slide Show All Languages</h1>
                         <div id="modeDiv">
                             <button id="modeButton" onClick={(fetchData)}><Link to="/">Notes</Link></button>
-                            <select ref={selectValue} name="filterOption" onChange={handleSelectValue} id="modeSelect">
+                            <select onChange={(e) => {setSelectValue(e.target.value)}} name="filterOption" id="modeSelect">
                                 <option value="all">All</option>
                                 <option value="new">New</option>
                                 <option value="learnt">Learnt</option>
@@ -149,8 +171,7 @@ export default function SlideShow() {
                 {/* SLIDESHOW */}
                 <div className="slideshow">
                     <div className="slideshowSlider" style={{ transform: `translate3d(${-index * 100}%, 0, 0)` }}>
-                        {filterMode && (
-                            filterMode.map((item, index) => {
+                        {notes.map((item, index) => {
                                 return (
                                     <div className="slide" key={index}>
                                         <div className="slideContent">
@@ -161,11 +182,43 @@ export default function SlideShow() {
                                         </div>
                                     </div>
                                 )
-                            })
-                        )}
+                        })
+                        }
                     </div>
-                    <div className="slideshowDots" >
-                        {filterMode.map((_, idx) => (
+                    
+                    <div id="remote">
+                        <button id="remoteLeft">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" className="bi bi-arrow-left" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                            </svg>
+                        </button>
+
+                        {play ? (
+                            <button id="playBtn" onClick={() => {setPlay(false)}}>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-play" viewBox="0 0 16 16">
+                                <path d="M10.804 8 5 4.633v6.734L10.804 8zm.792-.696a.802.802 0 0 1 0 1.392l-6.363 3.692C4.713 12.69 4 12.345 4 11.692V4.308c0-.653.713-.998 1.233-.696l6.363 3.692z"/>
+                            </svg>
+                            </button>
+                        ):(
+                            <button id="pauseBtn" onClick={() => {setPlay(true)}}>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-pause" viewBox="0 0 16 16">
+                                <path d="M6 3.5a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-1 0V4a.5.5 0 0 1 .5-.5zm4 0a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-1 0V4a.5.5 0 0 1 .5-.5z"/>
+                                </svg>
+                            </button>
+                        )}
+
+
+                        <button id="remoteRight">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+                            </svg>
+                        </button>
+                    </div>
+
+                    {/* SLIDE SHOW DOTS */}
+
+                    {/* <div className="slideshowDots" >
+                        {notes.map((_, idx) => (
                             <div 
                                 key={idx} 
                                 className={`slideshowDot${index === idx ? " active" : ""}`}
@@ -175,7 +228,7 @@ export default function SlideShow() {
                             >
                             </div>
                         ))}
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </div>
