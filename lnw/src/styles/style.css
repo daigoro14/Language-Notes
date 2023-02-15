@@ -523,9 +523,6 @@ body {
 /* DELETE NOTE BANNER */
 
 .dltNoteBanner {
-    /* -webkit-box-sizing: border-box; 
-    -moz-box-sizing: border-box;    
-    box-sizing: border-box;   */
     left: 50%;
     transform: translate(-50%,-50%);
     top: 50%;
@@ -544,7 +541,6 @@ body {
 }
 
 .dltNoteBanner p {
-    /* position: absolute; */
     margin-top: 10px;
     text-shadow: rgb(0, 0, 0) 1px 0 3px;
     color: white;
@@ -738,14 +734,16 @@ body {
     color: gold;
 }
 
+/* REMOTE */
+
 #remote {
     text-align: center;
-    margin-top: 35px;
+    margin-top: 8px;
 
 }
 
 #remoteLeft {
-    transition: 0.3s;
+    transition: 0.1s;
     background-color: inherit;
     padding: 0 10px 0 10px;
     border-radius: 30px 0 30px 30px;
@@ -799,6 +797,14 @@ body {
 #pauseBtn:hover {
     color: rgb(255, 166, 0);
     height: 50px;
+}
+
+#setTime {
+    margin: 0 auto 8px auto;
+    display: block;
+    width: 90px;
+    border: 2px solid black;
+    border-radius: 30px;
 }
 
 /* SLIDE SHOW DOTS */

@@ -4,22 +4,17 @@ import '../styles/style.css'
 import {url} from '../App'
 
 
-export default function SlideShow() {
-
-    // FOLLOWED THIS TUTORIAL FOR SLIDESHOW: https://tinloof.com/blog/how-to-build-an-auto-play-slideshow-with-react
+export default function SlideShowPage() {
 
     let params = useParams()
-    const delay = 2500;
 
     const [folder, setFolder] = useState([])
-    // const [noteLanguage, setNoteLanguage] = useState([])  
     const [notes, setNotes] = useState([])    
     const [selectValue, setSelectValue] = useState('all')
     const [play, setPlay] = useState(true)
-
+    const [delay, setDelay] = useState(5000)
     const [index, setIndex] = useState(0);
     const timeoutRef = useRef(null);
-
 
     useEffect(() => {
         if (params.language) {
@@ -86,26 +81,42 @@ export default function SlideShow() {
     function resetTimeout() {
         if (timeoutRef.current) {
           clearTimeout(timeoutRef.current);
+          timeoutRef.current = null
         }
     }
 
-    useEffect(() => {
+    function pauseTimeout() {
+        setPlay(false);
+        resetTimeout()
+    }
+
+    function changeSpeed(time) {
+        console.log(time)
+        setDelay(time)
+        indexTimeout()
+    }
+
+
+    function indexTimeout() {
         resetTimeout();
-        timeoutRef.current = setTimeout(
-          () =>
-            setIndex((prevIndex) =>
-              prevIndex === notes.length - 1 ? 0 : prevIndex + 1
-            ),
-          delay
-        );
+        timeoutRef.current = setTimeout(() => {
+            if (play) {
+                setIndex((prevIndex) =>
+                prevIndex === notes.length - 1 ? 0 : prevIndex + 1
+            )
+            }
+        }, delay);
     
         return () => {
             resetTimeout();
         };
+    }
+    
+    useEffect(() => {
+        indexTimeout()
       }, [index]);
 
-
-    //   console.log(index, notes)
+    //   console.log(delay)
 
   return (
     <div>
@@ -187,30 +198,35 @@ export default function SlideShow() {
                     </div>
                     
                     <div id="remote">
+                        <select defaultValue={5000} onChange={(e) => {changeSpeed(parseInt(e.target.value))}} id="setTime">
+                            <option value={3000}>3 sec</option>
+                            <option value={5000}>5 sec</option>
+                            <option value={10000}>10 sec</option>
+                            <option value={20000}>20 sec</option>
+                        </select>
                         <button id="remoteLeft">
                             <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" className="bi bi-arrow-left" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+                                <path d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
                             </svg>
                         </button>
 
                         {play ? (
-                            <button id="playBtn" onClick={() => {setPlay(false)}}>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-play" viewBox="0 0 16 16">
-                                <path d="M10.804 8 5 4.633v6.734L10.804 8zm.792-.696a.802.802 0 0 1 0 1.392l-6.363 3.692C4.713 12.69 4 12.345 4 11.692V4.308c0-.653.713-.998 1.233-.696l6.363 3.692z"/>
-                            </svg>
+                            <button id="playBtn" onClick={() => {pauseTimeout()}}>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" viewBox="0 0 16 16">
+                                    <path d="M6 3.5a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-1 0V4a.5.5 0 0 1 .5-.5zm4 0a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-1 0V4a.5.5 0 0 1 .5-.5z"/>
+                                </svg>
                             </button>
                         ):(
-                            <button id="pauseBtn" onClick={() => {setPlay(true)}}>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-pause" viewBox="0 0 16 16">
-                                <path d="M6 3.5a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-1 0V4a.5.5 0 0 1 .5-.5zm4 0a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-1 0V4a.5.5 0 0 1 .5-.5z"/>
+                            <button id="pauseBtn" onClick={() => {setPlay(true); setIndex((prevIndex) => prevIndex === notes.length - 1 ? 0 : prevIndex + 1)}}>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" viewBox="0 0 16 16">
+                                    <path d="M10.804 8 5 4.633v6.734L10.804 8zm.792-.696a.802.802 0 0 1 0 1.392l-6.363 3.692C4.713 12.69 4 12.345 4 11.692V4.308c0-.653.713-.998 1.233-.696l6.363 3.692z"/>
                                 </svg>
                             </button>
                         )}
 
-
                         <button id="remoteRight">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
                             </svg>
                         </button>
                     </div>
