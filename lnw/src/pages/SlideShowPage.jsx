@@ -12,7 +12,7 @@ export default function SlideShowPage() {
     const [notes, setNotes] = useState([])    
     const [selectValue, setSelectValue] = useState('all')
     const [play, setPlay] = useState(true)
-    const [delay, setDelay] = useState(5000)
+    const [delay, setDelay] = useState(10000)
     const [index, setIndex] = useState(0);
     const timeoutRef = useRef(null);
 
@@ -81,7 +81,7 @@ export default function SlideShowPage() {
     function resetTimeout() {
         if (timeoutRef.current) {
           clearTimeout(timeoutRef.current);
-          timeoutRef.current = null
+          timeoutRef.current = 0
         }
     }
 
@@ -89,13 +89,6 @@ export default function SlideShowPage() {
         setPlay(false);
         resetTimeout()
     }
-
-    function changeSpeed(time) {
-        console.log(time)
-        setDelay(time)
-        indexTimeout()
-    }
-
 
     function indexTimeout() {
         resetTimeout();
@@ -114,7 +107,7 @@ export default function SlideShowPage() {
     
     useEffect(() => {
         indexTimeout()
-      }, [index]);
+      }, [index, delay]);
 
     //   console.log(delay)
 
@@ -198,7 +191,7 @@ export default function SlideShowPage() {
                     </div>
                     
                     <div id="remote">
-                        <select defaultValue={5000} onChange={(e) => {changeSpeed(parseInt(e.target.value))}} id="setTime">
+                        <select defaultValue={10000} onChange={(e) => {setDelay(parseInt(e.target.value))}} id="setTime">
                             <option value={3000}>3 sec</option>
                             <option value={5000}>5 sec</option>
                             <option value={10000}>10 sec</option>
