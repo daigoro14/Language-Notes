@@ -3,32 +3,19 @@ import { Link } from 'react-router-dom'
 
 export default function NotesCmp(props) {
     const [search, setSearch] = useState("") 
-
+    const [selectValue, setSelectValue] = useState('all')
+    const [firstLngNote, setFirstLngNote] = useState('')
+    const [secondLngNote, setSecondLngNote] = useState('')
+    const [editFirstLanguage, setEditFirstLanguage] = useState("")
+    const [noteId, setNoteId] = useState("")
+    const [editSecondLanguage, setEditSecondLanguage] = useState("")
 
     const params = props.params
-    const selectValue = props.selectValue
-    const setSelectValue = props.setSelectValue
-    const firstLngNote = props.firstLngNote
-    const setFirstLngNote = props.setFirstLngNote
-    const secondLngNote = props.secondLngNote
-    const setSecondLngNote = props.setSecondLngNote
-    // const createNote = props.createNote
     const notes = props.notes
     const url = props.url
-    // const setNoteId = props.setNoteId
-    const setEditFirstLanguage = props.setEditFirstLanguage
-    const setEditSecondLanguage = props.setEditSecondLanguage
-    // const handleCheckBox = props.handleCheckBox
-    const setDisplayEditBanner = props.setDisplayEditBanner
     const setDisplayNoteBanner = props.setDisplayNoteBanner
     const setDeleteId = props.setDeleteId
-    const setDisplayFolderBanner = props.setDisplayFolderBanner
-
     const fetchData = props.fetchData
-    const noteId = props.noteId
-    const setNoteId = props.setNoteId
-    const editFirstLanguage = props.editFirstLanguage
-    const editSecondLanguage = props.editSecondLanguage
 
     async function createNote() {
         await fetch(`${url}/note/language/${params.language}`, {
@@ -84,7 +71,6 @@ export default function NotesCmp(props) {
     <>
     {params.language ? (
         <>
-            <h1 id="folderHeadline" key={params.language}>{params.language}</h1>
             <div id="modeDiv">
 
                 <button id="modeButton">
@@ -199,7 +185,7 @@ export default function NotesCmp(props) {
             })
     }
     </div>
-    {params.language &&(
+    {/* {params.language &&(
         <div id="settingsDiv">
             <button onClick={() => {setDisplayEditBanner("editBanner")}}>
                 Edit folder name
@@ -208,7 +194,7 @@ export default function NotesCmp(props) {
                 Delete
             </button>
         </div>
-    )}
+    )} */}
     </>
   )
 }

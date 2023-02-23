@@ -1,0 +1,251 @@
+.navBar {
+    position: fixed;
+    transition: 0.3s;
+    width: 100%;
+    height: 70px;
+    /* border-radius: 0 100px 0 100px; */
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 2;
+}
+
+.navShow {
+    top: 0;
+}
+
+.navHide {
+    top: -114px;
+}
+
+.lngMenuDrpDwn {
+    cursor: pointer;
+    background: inherit;
+    display: flex;
+    align-items: center;
+    border: none;
+    font-size: 26px;
+    margin: 0 20px 0 20px;
+    height: 100%;
+}
+
+.settingDrpDwn {
+    cursor: pointer;
+    background: inherit;
+    display: flex;
+    align-items: center;
+    border: none;
+    font-size: 26px;
+    margin: 0 20px 0 20px;
+    height: 100%;
+}
+
+.lngMenuBtn {
+    transition: 0.3s;
+    margin-left: 5px;
+    border-radius: 30px;
+    width: 26px;
+    padding-top: 2px;
+}
+
+.lngMenuBtn:hover {
+    color: yellow;
+}
+
+.settingBtn {
+    margin-left: 5px;
+    border-radius: 30px;
+    padding-top: 2px;
+    width: 22px;
+}
+
+/* SIDE MENU*/
+#sideMenu {
+    top: 0;
+    transition: 0.3s;
+    left: -200px;
+    position: absolute;
+    border-radius: 0px 0 12px 0px;
+    overflow-y: scroll;
+    top: 70px;
+    height: 80vh;
+    width: 200px;
+    background-color: rgba(62, 63, 63, 0.452);
+    backdrop-filter: blur(4px);
+}
+
+.lngMenuDrpDwn:hover ~ #sideMenu{
+    left: 0;
+}
+
+#sideMenu:hover {
+    left: 0;
+}
+
+#sideMenu::-webkit-scrollbar {
+    display: none;
+}
+
+/* FORM */
+#createFolderForm {
+    opacity: 1;
+    z-index: 1;
+    -webkit-box-sizing: border-box; 
+    -moz-box-sizing: border-box;    
+    box-sizing: border-box; 
+    position: fixed;
+    border: none;
+    height: 66px;
+    width: 200px;
+    text-align: left;
+    color: white;
+    padding: 8px;
+    font-size: 18px;
+    background-color: rgb(105, 105, 105);
+    /* border-radius: 0 12px 0 0; */
+}
+
+#createFolderForm label {
+    font-family: sans-serif;
+    display: block;
+}
+
+#createFolderForm div {
+    margin-top: 3px;
+}
+
+#createFolderInput {
+    padding: 2px 0 2px 7px;
+    width: 120px;
+    border: none;
+    border-radius: 12px 0 0 12px;
+}
+
+#createFolderInput:focus::placeholder {
+    color: transparent;
+}
+
+#createFolderInput:focus-visible {
+    outline: none;
+}
+
+#createFolderBtn {
+    width: 47px;
+    position: relative;
+    right: 5px;
+    border: none;
+    border-radius: 0 12px 12px 0;
+    padding: 2px;
+    background-color: rgb(49, 49, 49);
+    color: whitesmoke;
+}
+
+#createFolderBtn:hover {
+    color: rgb(240, 180, 28);
+    cursor: pointer;
+}
+
+.folderList {
+    z-index: 0;
+    position: relative;
+    top: 66px;
+    background-color: rgba(76, 77, 77, 0.51);
+    list-style: none;
+}
+
+.folderListItem {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: whitesmoke;
+    margin: 0 auto;
+    font-size: 19px;
+    font-family: sans-serif;
+    border-bottom: 1px dotted rgba(41, 41, 41, 0.678);
+    height: 45px;
+    width: 96%;
+}
+
+.folderListItem:hover {
+    width: 100%;
+    color: gold;
+    background-color: rgba(31, 31, 31, 0.514);
+}
+
+/* Settings Menu */
+.settingsMenu {
+    top: 0;
+    transition: 0.3s;
+    right: -200px;
+    position: absolute;
+    border-radius: 0 0 0 12px;
+    overflow-y: scroll;
+    top: 70px;
+    /* height: 80vh; */
+    width: 200px;
+    background-color: rgba(62, 63, 63, 0.452);
+    backdrop-filter: blur(4px);
+}
+
+.settingsMenu:hover {
+    right: 0;
+}
+
+.settingDrpDwn:hover ~ .settingsMenu{
+    right: 0;
+}
+
+.settingsMenu::-webkit-scrollbar {
+    display: none;
+}
+
+.settingsList {
+    z-index: 0;
+    position: relative;
+    /* top: 66px; */
+    background-color: rgba(76, 77, 77, 0.51);
+    list-style: none;
+}
+
+.settingsListItem {
+    transition: 0.3s;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: whitesmoke;
+    margin: 0 auto;
+    font-size: 19px;
+    font-family: sans-serif;
+    border-bottom: 1px dotted rgba(41, 41, 41, 0.678);
+    height: 45px;
+    width: 96%;
+}
+
+.settingsListItem:hover {
+    width: 100%;
+    color: gold;
+    background-color: rgba(31, 31, 31, 0.514);
+}
+
+.dltBtnSettings:hover {
+    color: white;
+    background-color: rgba(255, 0, 0, 0.541);
+}
+
+@media(max-width: 900px) {
+    #navMenuBtn {
+        display: block;
+        padding: 7px;
+        margin-right: 24px;
+        border-radius: 30px;
+        /* border: dotted 1px rgba(0, 0, 0, 0.353); */
+        width: 55px;
+        height: 55px;
+    }
+
+
+
+}

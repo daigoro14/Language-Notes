@@ -2,8 +2,8 @@ import React, {useEffect, useState} from 'react'
 import { Link, useParams, useNavigate } from 'react-router-dom'
 import '../styles/style.css'
 import {url} from '../App'
-import FolderCmp from '../components/notePage/FolderCmp'
 import NotesCmp from '../components/notePage/NotesCmp'
+import NavBar from '../components/NavBar'
 
 
 export default function NotePage() {
@@ -13,12 +13,6 @@ export default function NotePage() {
     const [folder, setFolder] = useState([])
     const [notes, setNotes] = useState([]) 
     const [folderName, setFolderName] = useState('')
-    const [firstLngNote, setFirstLngNote] = useState('')
-    const [secondLngNote, setSecondLngNote] = useState('')
-    const [selectValue, setSelectValue] = useState('all')
-    const [noteId, setNoteId] = useState("")
-    const [editFirstLanguage, setEditFirstLanguage] = useState("")
-    const [editSecondLanguage, setEditSecondLanguage] = useState("")
     const [deleteId, setDeleteId] = useState("")
     const [displayNoteBanner, setDisplayNoteBanner] = useState("hideDltNoteBanner")
     const [displayFolderBanner, setDisplayFolderBanner] = useState("hideDltFolderBanner")
@@ -117,19 +111,21 @@ export default function NotePage() {
 
   return (
     <div>
-        <Link id="homeLink" to="/">
-            <button id="homeButton">Home</button>
-        </Link>
-
-        {/* FOLDERS */}
-
-        <FolderCmp 
+        <NavBar 
+            setDisplayEditBanner={setDisplayEditBanner}
+            setDisplayFolderBanner={setDisplayFolderBanner}
+            params={params}
             folder={folder}
             folderName={folderName}
             setFolderName={setFolderName}
             createFolder={createFolder}
             navigate={navigate}
         />
+
+        <Link id="homeLink" to="/">
+            <button id="homeButton">Home</button>
+        </Link>
+
 
         {/* BANNERS */}
 
@@ -149,27 +145,12 @@ export default function NotePage() {
             <div id="content">
                 <NotesCmp 
                     params={params}
-                    selectValue={selectValue}
-                    setSelectValue={setSelectValue}
-                    firstLngNote={firstLngNote}
-                    setFirstLngNote={setFirstLngNote}
-                    secondLngNote={secondLngNote}
-                    setSecondLngNote={setSecondLngNote}
-                    // createNote={createNote}
                     notes={notes}
                     url={url}
-                    setNoteId={setNoteId}
-                    setEditFirstLanguage={setEditFirstLanguage}
-                    setEditSecondLanguage={setEditSecondLanguage}
                     // handleCheckBox={handleCheckBox}
-                    setDisplayEditBanner={setDisplayEditBanner}
                     setDisplayNoteBanner={setDisplayNoteBanner}
                     setDeleteId={setDeleteId}
-                    setDisplayFolderBanner={setDisplayFolderBanner}
                     fetchData={fetchData}
-                    noteId={noteId}
-                    editFirstLanguage={editFirstLanguage}
-                    editSecondLanguage={editSecondLanguage}
                 />
             </div>
         </div>
