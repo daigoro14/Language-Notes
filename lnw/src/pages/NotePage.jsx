@@ -4,6 +4,7 @@ import '../styles/style.css'
 import {url} from '../App'
 import NotesCmp from '../components/notePage/NotesCmp'
 import NavBar from '../components/NavBar'
+import SlidesCmp from '../components/slideshow/SlidesCmp'
 
 
 export default function NotePage() {
@@ -18,6 +19,8 @@ export default function NotePage() {
     const [displayFolderBanner, setDisplayFolderBanner] = useState("hideDltFolderBanner")
     const [displayEditBanner, setDisplayEditBanner] = useState("hideEditBanner")
     const [editFolder, setEditFolder] = useState(params.language)
+    const [selectValue, setSelectValue] = useState('all')
+    const [slides, setSlides] = useState(false)
 
     useEffect(() => {
         fetchData()
@@ -119,12 +122,7 @@ export default function NotePage() {
             folderName={folderName}
             setFolderName={setFolderName}
             createFolder={createFolder}
-            navigate={navigate}
         />
-
-        <Link id="homeLink" to="/">
-            <button id="homeButton">Home</button>
-        </Link>
 
 
         {/* BANNERS */}
@@ -143,7 +141,17 @@ export default function NotePage() {
 
         <div id="contentDesign">
             <div id="content">
-                <NotesCmp 
+                {slides ? (
+                    <SlidesCmp
+                    notes={notes}
+                    params={params}
+                    selectValue={selectValue}
+                    setSelectValue={setSelectValue}
+                    fetchData={fetchData}
+                    setSlides={setSlides}
+                    />    
+                ):(
+                    <NotesCmp 
                     params={params}
                     notes={notes}
                     url={url}
@@ -151,7 +159,11 @@ export default function NotePage() {
                     setDisplayNoteBanner={setDisplayNoteBanner}
                     setDeleteId={setDeleteId}
                     fetchData={fetchData}
-                />
+                    selectValue={selectValue}
+                    setSelectValue={setSelectValue}
+                    setSlides={setSlides}
+                    />
+                )}
             </div>
         </div>
         {/* FOLDER BANNER */}

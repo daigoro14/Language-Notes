@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 
 export default function NotesCmp(props) {
     const [search, setSearch] = useState("") 
-    const [selectValue, setSelectValue] = useState('all')
     const [firstLngNote, setFirstLngNote] = useState('')
     const [secondLngNote, setSecondLngNote] = useState('')
     const [editFirstLanguage, setEditFirstLanguage] = useState("")
@@ -16,6 +15,9 @@ export default function NotesCmp(props) {
     const setDisplayNoteBanner = props.setDisplayNoteBanner
     const setDeleteId = props.setDeleteId
     const fetchData = props.fetchData
+    const setSelectValue = props.setSelectValue
+    const selectValue = props.selectValue
+    const setSlides = props.setSlides
 
     async function createNote() {
         await fetch(`${url}/note/language/${params.language}`, {
@@ -72,11 +74,8 @@ export default function NotesCmp(props) {
     {params.language ? (
         <>
             <div id="modeDiv">
-
-                <button id="modeButton">
-                    <Link to={`/Slideshow/${params.language}`}>
-                        Slide Show
-                    </Link>
+                <button id="modeButton" onClick={() => {setSlides(true)}}>
+                    Slide Show
                 </button>
 
                 <select onChange={(e) => {setSelectValue(e.target.value)}} name="filterOption" id="modeSelect">
@@ -95,7 +94,9 @@ export default function NotesCmp(props) {
         <>
             <h1 id="folderHeadline">All Notes</h1>
             <div id="modeDiv">
-                <button id="modeButton"><Link to="/slideshow">Slide Show</Link></button>
+                <button id="modeButton" onClick={() => {setSlides(true)}}>
+                    Slide Show
+                </button>
                 <select onChange={(e) => {setSelectValue(e.target.value)}} name="filterOption" id="modeSelect">
                     <option value="all">All</option>
                     <option value="new">New</option>
