@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import { Link, useParams, useNavigate } from 'react-router-dom'
 import '../styles/style.css'
+import '../styles/banners.css'
 import {url} from '../App'
 import NotesCmp from '../components/notePage/NotesCmp'
 import NavBar from '../components/NavBar'

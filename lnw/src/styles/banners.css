@@ -1,0 +1,175 @@
+/* DELETE NOTE BANNER */
+
+.dltNoteBanner {
+    left: 50%;
+    transform: translate(-50%,-50%);
+    top: 50%;
+    border: 1px solid black;
+    border-radius: 10px;
+    width: 450px;
+    height: 110px;
+    background-color: rgb(104, 104, 104);
+    z-index: 2;
+    position: absolute;
+    text-align: center;
+}
+
+.hideDltNoteBanner {
+    display: none
+}
+
+.dltNoteBanner p {
+    margin-top: 10px;
+    text-shadow: rgb(0, 0, 0) 1px 0 3px;
+    color: white;
+}
+
+.bannerDltBtn {
+    left: 100px;
+    position: absolute;
+    top: 50px;
+    border-radius: 8px;
+    border: none;
+    height: 30px;
+    width: 120px;
+    background-color: rgb(240, 29, 29);
+    color: white;
+    transition: 0.3s;
+    /* display: block; */
+}
+
+.bannerDltBtn:hover {
+    height: 40px;
+}
+
+.bannerNvmBtn {
+    top: 50px;
+    right: 100px;
+    position: absolute;
+    background-color: whitesmoke;
+    border-radius: 8px;
+    border: none;
+    height: 30px;
+    width: 120px;
+    transition: 0.3s;
+    /* display: block; */
+}
+
+.bannerNvmBtn:hover {
+    height: 40px;
+    /* color: white; */
+    /* background-color: rgb(168, 168, 168); */
+}
+
+/* DELETE FOLDER BANNER */
+
+.dltFolderBanner {
+    left: 50%;
+    transform: translate(-50%,-50%);
+    top: 50%;
+    border: 1px solid black;
+    border-radius: 10px;
+    width: 450px;
+    height: 110px;
+    background-color: rgb(104, 104, 104);
+    z-index: 2;
+    position: absolute;
+    text-align: center;
+}
+
+.hideDltFolderBanner {
+    display: none
+}
+
+.dltFolderBanner p {
+    /* position: absolute; */
+    margin-top: 10px;
+    text-shadow: rgb(0, 0, 0) 1px 0 3px;
+    color: white;
+}
+
+/* DELETE EDIT BANNER */
+
+.editBanner {
+    left: 50%;
+    transform: translate(-50%,-50%);
+    top: 50%;
+    border: 1px solid black;
+    border-radius: 10px;
+    width: 450px;
+    height: 110px;
+    background-color: rgb(104, 104, 104);
+    z-index: 2;
+    position: absolute;
+    text-align: center;
+}
+
+.hideEditBanner {
+    display: none
+}
+
+.editBanner p {
+    margin-top: 10px;
+    text-shadow: rgb(0, 0, 0) 1px 0 3px;
+    color: white;
+}
+
+#editFolderForm {
+    margin-top: 10px;
+    display: flex;
+    height: 25px;
+    justify-content: center;
+}
+
+#editFolderInput {
+    top: 40px;
+    border: none;
+    border-radius: 12px 0 0 12px;
+    padding-left: 8px;
+    height: 25px;
+    font-size: 16px;
+}
+
+#editFolderInput:focus-visible{
+    outline: none;
+}
+
+#editUpdateBtn {
+    background-color: rgb(49, 49, 49);
+    color: white;
+    width: 65px;
+    height: 25px;
+    border: none;
+    border-radius: 0 12px 12px 0;
+}
+
+#editUpdateBtn:hover {
+    color: rgb(240, 180, 28);
+    cursor: pointer;
+}
+
+.close {
+    position: absolute;
+    right: 8px;
+    top: 6px;
+    width: 26px;
+    height: 26px;
+    opacity: 0.3;
+  }
+  .close:hover {
+    opacity: 1;
+  }
+  .close:before, .close:after {
+    position: absolute;
+    left: 15px;
+    content: ' ';
+    height: 18px;
+    width: 2px;
+    background-color: #333;
+  }
+  .close:before {
+    transform: rotate(45deg);
+  }
+  .close:after {
+    transform: rotate(-45deg);
+  }

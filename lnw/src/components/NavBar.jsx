@@ -62,6 +62,7 @@ export default function NavBar(props) {
                         placeholder="Put in a language"
                         defaultValue={folderName} 
                         onChange={(e) => {setFolderName(e.target.value)}}
+                        required
                     />
                     <button id="createFolderBtn" type="submit" onClick={createFolder}>Create</button>
             </div>
