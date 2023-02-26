@@ -106,7 +106,7 @@
     box-sizing: border-box; 
     position: fixed;
     border: none;
-    height: 66px;
+    height: 70px;
     width: 200px;
     text-align: left;
     color: white;
@@ -117,12 +117,32 @@
 }
 
 #createFolderForm label {
+    margin: 5px 0 2px 0;
     font-family: sans-serif;
     display: block;
 }
 
 #createFolderForm div {
     margin-top: 3px;
+}
+
+.homeButton {
+    transition: 0.3s;
+    cursor: pointer;
+    position: absolute;
+    top: 8px;
+    width: 19px;
+    right: 0;
+    margin: 0 24px 0 0;
+    border: solid 1px white;
+    border-radius: 15px;
+    padding: 3px;
+}
+
+.homeButton:hover {
+    width: 18px;
+    color: rgb(255, 191, 0);
+    border: solid 1px rgb(255, 191, 0);
 }
 
 #createFolderInput {
@@ -159,7 +179,7 @@
 .folderList {
     z-index: 0;
     position: relative;
-    top: 66px;
+    top: 70px;
     background-color: rgba(76, 77, 77, 0.51);
     list-style: none;
 }
