@@ -4,6 +4,7 @@ import {Routes, Route} from 'react-router-dom'
 import SlideShowPage from './pages/SlideShowPage';
 import NotePage from './pages/NotePage';
 import './styles/style.css'
+import LoginPage from './pages/LoginPage';
 
 export const url = process.env.REACT_APP_LNW_API || "http://localhost:8080";
 
@@ -20,6 +21,7 @@ function App() {
         <Route path="/:language" element={<NotePage/>}/>
         <Route path="/slideshow" element={<SlideShowPage/>}/>
         <Route path="/slideshow/:language" element={<SlideShowPage/>}/>
+        <Route path="/login" element={<LoginPage/>}/>
       </Routes>
     </div>
   );
