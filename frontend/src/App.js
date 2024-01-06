@@ -5,6 +5,7 @@ import SlideShowPage from './pages/SlideShowPage';
 import NotePage from './pages/NotePage';
 import './styles/style.css'
 import LoginPage from './pages/LoginPage';
+import SignupPage from './pages/SignupPage';
 
 export const url = process.env.REACT_APP_LNW_API || "http://localhost:8080";
 
@@ -22,6 +23,7 @@ function App() {
         <Route path="/slideshow" element={<SlideShowPage/>}/>
         <Route path="/slideshow/:language" element={<SlideShowPage/>}/>
         <Route path="/login" element={<LoginPage/>}/>
+        <Route path="/signup" element={<SignupPage/>}/>
       </Routes>
     </div>
   );

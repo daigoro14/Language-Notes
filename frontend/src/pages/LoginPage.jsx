@@ -1,13 +1,34 @@
-import React from 'react'
+import React, { useState } from 'react'
 import '../styles/style.css'
 import loginStyle from '../styles/login.module.css'
-import { useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
+import {url} from '../App'
+
 
 export default function LoginPage() {
 
+    const [username, setUsername] = useState('')
+    const [password, setPassword] = useState('')
+
     let params = useParams()
+    const navigate = useNavigate()
 
     console.log(params)
+
+    async function login() {
+        console.log(username, password)
+        await fetch(`${url}/user/login`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({username, password})
+        })
+        .then(res => {
+            res.json()
+            navigate(`/`)
+        })
+    }
 
   return (
     <div>
@@ -40,9 +61,10 @@ export default function LoginPage() {
                     <div className={loginStyle.or}>OR</div>
                 </div>
                 <div className={loginStyle.right}>
-                    <input type="text" placeholder='Username' />
-                    <input type="password" placeholder='Password' />
-                    <button className={loginStyle.submit}>Login</button>
+                    <input type="text" placeholder='Username' onChange={(e) => {setUsername(e.target.value)}}/>
+                    <input type="password" placeholder='Password' onChange={(e) => {setPassword(e.target.value)}}/>
+                    <button className={loginStyle.submit} onClick={login}>Login</button>
+                    <Link to="/signup">No account? Sign up here.</Link>
                 </div>
             </div>
         </div>
